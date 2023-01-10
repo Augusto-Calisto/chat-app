@@ -1,0 +1,13 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.bg-image {
+    -fx-background-image: url("../image/discord.jpg");
+}
+
+.btn-transparente {
+    -fx-background-color: Transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-border: none;
+    -fx-cursor: pointer;
+    -fx-overflow: hidden;
+    -fx-outline: none;
+}
