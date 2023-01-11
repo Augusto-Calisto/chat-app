@@ -3,6 +3,7 @@ module chat_app {
 	requires javafx.fxml;
 	requires javafx.base;
 	requires javafx.graphics;
+	requires java.sql;
 	
     exports br.com.chat;
     exports br.com.chat.controller;
