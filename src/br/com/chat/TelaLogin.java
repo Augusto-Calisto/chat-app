@@ -27,7 +27,9 @@ public class TelaLogin extends Application {
 			primaryStage.getIcons().addAll(new Image(getClass().getResource("/image/icone_app.png").toString()));
 						
 			primaryStage.setScene(scene);
-						
+			
+			primaryStage.setResizable(false);
+									
 			primaryStage.show();
 			
 		} catch(Exception e) {
