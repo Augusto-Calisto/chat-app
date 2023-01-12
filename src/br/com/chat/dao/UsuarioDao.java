@@ -48,4 +48,25 @@ public class UsuarioDao {
 
         return optional;
     }
+    
+    public int cadastrar(Usuario usuario) {
+    	try {
+	    	String sql = "INSERT INTO usuarios (nome, username, email, senha, foto_perfil) VALUES (?, ?, ?, ?, ?)";
+	
+	        PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+	
+	        preparedStatement.setString(1, usuario.getNome());
+	        preparedStatement.setString(2, usuario.getUsername());
+	        preparedStatement.setString(3, usuario.getEmail());
+	        preparedStatement.setString(4, usuario.getSenha());
+	        preparedStatement.setString(5, usuario.getFoto().getImagem());
+	
+	        return preparedStatement.executeUpdate();
+	        
+    	} catch(SQLException sqlException) {    		
+        	LOGGER.log(Level.SEVERE, sqlException.getMessage());
+        	
+        	return -1;
+        }
+    }
 }

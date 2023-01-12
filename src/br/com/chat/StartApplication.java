@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
-public class TelaLogin extends Application {
+public class StartApplication extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
