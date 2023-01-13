@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 import br.com.chat.dao.HistoricoDao;
+import br.com.chat.entity.Usuario;
 
 public class ServerThread {
     private HistoricoDao historicoDao;
@@ -25,17 +27,23 @@ public class ServerThread {
     public void receberMensagem() {
         while(true) {
             try {
-                Conversa conversa = (Conversa) objectInputStream.readUnshared();
-
-                if(conversa.hasDestinatario()) {
-                    encaminharMensagem(conversa);
-                }
+            	Object objeto = objectInputStream.readUnshared();
+            	
+            	if(objeto instanceof Conversa) {
+            		Conversa conversa = (Conversa) objeto;
+            		
+            		if(conversa.hasDestinatario()) {
+            			encaminharMensagem(conversa);
+                    }
+            	} else {
+                    armazenarClienteConectado(objeto);
+            	}
             } catch(IOException | ClassNotFoundException erro) {
                 erro.getStackTrace();
             }
         }
     }
-
+    
     public void encaminharMensagem(Conversa conversa) throws IOException {
         ServerThread cliente = Server.getClientesConectados().get(conversa.getIdUsuarioDestinatario());
 
@@ -44,4 +52,15 @@ public class ServerThread {
             cliente.objectOutputStream.writeUnshared(conversa);
         }
     }
+
+    private void armazenarClienteConectado(Object objeto) {
+		Map<Integer, ServerThread> clientesConectados = Server.getClientesConectados();
+		
+		Usuario usuario = (Usuario) objeto;
+		
+		if(!clientesConectados.containsKey(usuario.getId())) {
+            clientesConectados.put(usuario.getId(), this);
+            System.out.println(clientesConectados);
+        }
+	}
 }

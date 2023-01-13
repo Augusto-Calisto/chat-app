@@ -9,6 +9,7 @@ import java.util.Map;
 public class Server {
     public static final String HOST = "127.0.0.1";
     public static final int PORTA = 8773;
+    
     private static Map<Integer, ServerThread> clientesConectados;
         
     @SuppressWarnings("resource")
@@ -20,27 +21,12 @@ public class Server {
         	
             System.out.println("Server rodando na porta: " + PORTA);
             
-            int id = 0;
-
             while(!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept(); // Esperando a requisicao de algum cliente
-
-                // Este codigo e executado depois que um cliente e conectado
-                //UsuarioSingleton usuarioSingleton = UsuarioSingleton.getUsuarioSingleton();
-
-                //Usuario usuario = usuarioSingleton.getUsuario();
-
-                //int id = usuario.getId();
                 
-                if(!clientesConectados.containsKey(id)) {
-                    ServerThread serverThread = new ServerThread(socket);
+                // Receber o objeto Usuario aqui
 
-                    clientesConectados.put(id, serverThread);
-
-                    System.out.println(getClientesConectados());
-                    
-                    id++;
-                }
+                new ServerThread(socket);
             }
         } catch(IOException ioException) {
             ioException.getStackTrace();

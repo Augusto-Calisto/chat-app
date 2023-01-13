@@ -1,7 +1,12 @@
 package br.com.chat.entity;
 
-public class Usuario {
-    private int id;
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private int id;
     private String nome;
     private String username;
     private String email;
@@ -55,8 +60,28 @@ public class Usuario {
     public Foto getFoto() {
         return foto;
     }
-
+    
     @Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		
+		if(getClass() != obj.getClass()) {
+			return false;
+		}
+		
+		Usuario other = (Usuario) obj;
+		
+		return id == other.id;
+	}
+
+	@Override
     public String toString() {
         return this.nome;
     }

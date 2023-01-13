@@ -99,7 +99,7 @@ public class ChatController implements Initializable {
 		
 	            client = new Client(conversa, trocaDeMensagens);
 	
-	            client.conectarAoServidor();
+	            client.conectarAoServidor(usuarioAutenticado);
 	
 	            carregarFotoDoUsuarioAutenticado(usuarioAutenticado.getId());
 	            

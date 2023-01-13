@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import br.com.chat.entity.Usuario;
+
 public class Client {
     private Socket socket;
     private Conversa conversa;
@@ -21,12 +23,14 @@ public class Client {
         this.vBox = vBox;
     }
 
-    public void conectarAoServidor() throws UnknownHostException, IOException {
+    public void conectarAoServidor(Usuario usuario) throws UnknownHostException, IOException {
 	    socket = new Socket(Server.HOST, Server.PORTA);
 	
 	    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 	
 	    objectInputStream = new ObjectInputStream(socket.getInputStream());
+	    
+	    objectOutputStream.writeUnshared(usuario); // <---->
 	
 	    new Thread(this::receberMensagem).start();
 	
