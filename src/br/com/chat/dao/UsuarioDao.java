@@ -1,6 +1,5 @@
 package br.com.chat.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,12 @@ import br.com.chat.entity.Usuario;
 
 public class UsuarioDao {
 	private static final Logger LOGGER = Logger.getLogger(UsuarioDao.class.getName());
-	private static Connection conexao = Conexao.getConnection();
+	
+	private Conexao conexao;
+	
+	public UsuarioDao() {
+		conexao = new Conexao();
+	}
 	
     public Optional<Usuario> autenticar(String username, String senha) {
         Optional<Usuario> optional = Optional.empty();
@@ -23,7 +27,7 @@ public class UsuarioDao {
         try {
             String sql = "SELECT * FROM usuarios WHERE username = ? AND senha = ?";
 
-            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, senha);
@@ -57,7 +61,7 @@ public class UsuarioDao {
     	try {
 	    	String sql = "INSERT INTO usuarios (nome, username, email, senha, foto_perfil) VALUES (?, ?, ?, ?, ?)";
 	
-	        PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+	        PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 	
 	        preparedStatement.setString(1, usuario.getNome());
 	        preparedStatement.setString(2, usuario.getUsername());
@@ -80,7 +84,7 @@ public class UsuarioDao {
         try {
             String sql = "SELECT * FROM usuarios WHERE id <> ? ORDER BY nome";
 
-            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 
             preparedStatement.setInt(1, id);
 
@@ -102,7 +106,9 @@ public class UsuarioDao {
 
             return usuarios;
             
-        } catch(SQLException exception) {
+        } catch(SQLException sqlException) {
+        	LOGGER.log(Level.SEVERE, sqlException.getMessage());
+        	
             return List.of();
         }
     }

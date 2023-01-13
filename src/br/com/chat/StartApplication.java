@@ -16,8 +16,6 @@ public class StartApplication extends Application {
         threadServidor.start();
         
 		launch(args);
-		
-		// TODO Tirar instancia do DB de estatica para de classe
 	}
 	
 	@SuppressWarnings("exports")

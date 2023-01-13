@@ -76,7 +76,7 @@
                <graphic>
                   <ImageView fitHeight="31.0" fitWidth="26.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../images/enviar.png"/>
+                        <Image url="@../image/enviar.png"/>
                      </image>
                   </ImageView>
                </graphic>

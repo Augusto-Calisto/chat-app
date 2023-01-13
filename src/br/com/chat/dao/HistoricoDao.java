@@ -3,7 +3,6 @@ package br.com.chat.dao;
 import br.com.chat.db.Conexao;
 import br.com.chat.model.Conversa;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,14 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricoDao {
-    private static Connection conexao = Conexao.getConnection();
+    private Conexao conexao;
+    
+    public HistoricoDao() {
+        conexao = new Conexao();
+    }
 
     public void salvarConversa(Conversa conversa) {
         try {
             String sql = "INSERT INTO historico_conversas (id_usuario_remetente, id_usuario_destinatario, mensagem) VALUES (?, ?, ?)";
 
             if(conversa.getTexto() != null) {
-                PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+                PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 
                 preparedStatement.setInt(1, conversa.getIdUsuarioRemetente());
                 
@@ -39,7 +42,7 @@ public class HistoricoDao {
         try {
             String sql = "SELECT * FROM historico_conversas WHERE id_usuario_remetente = ? AND id_usuario_destinatario = ? OR id_usuario_remetente = ? AND id_usuario_destinatario = ?";
 
-            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 
             preparedStatement.setInt(1, idUsuarioRemetente);
             preparedStatement.setInt(2, idUsuarioDestinatario);

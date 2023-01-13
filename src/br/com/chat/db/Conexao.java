@@ -14,23 +14,21 @@ public class Conexao {
 	private static final String URL = "jdbc:mysql://localhost:3306/chat_app?serverTimezone=UTC";
 	private static final String USUARIO = "root";
 	private static final String SENHA = "1234";
-	
-	private static Connection connection;
-	  
-    static {
+		
+	private Connection connection;
+
+    public Connection getConnection() {
         try {
         	LOGGER.addHandler(new FileHandler("connection_db.log", true));
         	
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
+
             connection = DriverManager.getConnection(URL, USUARIO, SENHA);
-            
+
         } catch(ClassNotFoundException | SQLException | SecurityException | IOException error) {
         	LOGGER.log(Level.SEVERE, error.getMessage());
         }
-    }
-    
-    public static Connection getConnection() {
+
         return connection;
     }
 }
