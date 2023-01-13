@@ -123,10 +123,10 @@ public class ChatController implements Initializable {
 
             List<Conversa> conversas = historicoDao.getHistoricoConversas(usuarioAutenticado.getId(), usuarioSelecionado.getId());
 
+            trocaDeMensagens.getChildren().setAll(new HBox());
+            
             if(!conversas.isEmpty()) {
                 Badge.montarHistoricoConversa(trocaDeMensagens, usuarioAutenticado.getId(), conversas);
-            } else {
-                trocaDeMensagens.getChildren().setAll(new HBox());
             }
 
             painelDaConversa.setVisible(true);
