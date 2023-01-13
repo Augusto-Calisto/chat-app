@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -78,12 +79,6 @@ public class LoginController {
     @SuppressWarnings("exports")
 	@FXML
     public void redirecionarParaTelaCadastrar(ActionEvent event) throws IOException {
-    	 Node node = (Node) event.getSource();
-    	 
-         Stage stage = (Stage) node.getScene().getWindow();
-         
-         stage.close();
-         
          FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/template/cadastrar.fxml"));
 
          Scene scene = new Scene(fxmlLoader.load());
@@ -95,6 +90,8 @@ public class LoginController {
          tela.getIcons().addAll(new Image(getClass().getResource("/image/icone_app.png").toString()));
 
          tela.setResizable(false);
+         
+         tela.initModality(Modality.WINDOW_MODAL);
 
          tela.setScene(scene);
 

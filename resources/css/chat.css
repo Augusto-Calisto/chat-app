@@ -1,0 +1,43 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.btn-success {
+    -fx-color: rgb(232, 230, 227);
+    -fx-background-color: #28a745;
+    -fx-border-color: #28a745;
+    -fx-border-radius: 10px;
+}
+
+.btn-danger {
+    -fx-color: rgb(232, 230, 227);
+    -fx-background-color: #dc3545;
+    -fx-border-color: #dc3545;
+    -fx-border-radius: 10px;
+}
+
+.btn-danger:pressed {
+    -fx-background-color: red;
+    -fx-border-color: red;
+    -fx-border-radius: 10px;
+}
+
+.background-dark {
+    -fx-background-color: #46474A;
+}
+
+.background-gray {
+    -fx-background-color: #636566;
+}
+
+.mensagem-enviada {
+    -fx-color: rgb(239, 242, 255);
+    -fx-background-color: rgb(15, 125, 242);
+    -fx-background-radius: 20px;
+}
+
+.mensagem-recebida {
+    -fx-background-color: rgb(233, 233, 235);
+    -fx-background-radius: 20px;
+}
+
+.img-redonda {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}

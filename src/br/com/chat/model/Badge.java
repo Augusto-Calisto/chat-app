@@ -63,9 +63,9 @@ public class Badge {
     public static void montarHistoricoConversa(VBox vBox, int idUsuarioRemetente, List<Conversa> conversas) {
         for(Conversa conversa : conversas) {
             if(idUsuarioRemetente == conversa.getIdUsuarioRemetente()) {
-                addMensagemEnviada(vBox, conversa.getTexto());
+                addMensagemEnviada(vBox, conversa.getTexto()); // Usuario autenticado enviou a mensagem
             } else {
-                addMensagemRecebida(vBox, conversa.getTexto());
+                addMensagemRecebida(vBox, conversa.getTexto()); // Amigo do usuario autenticado enviou a mensagem
             }
         }
     }

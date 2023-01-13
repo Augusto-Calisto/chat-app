@@ -11,15 +11,14 @@ public class Server {
     public static final int PORTA = 8773;
     private static Map<Integer, ServerThread> clientesConectados;
     
-    private ServerSocket serverSocket;
+    private static ServerSocket serverSocket;
     
-    public Server() throws IOException {
-    	serverSocket = new ServerSocket(PORTA);
-    	clientesConectados = new HashMap<>();
-	}
-
-    public void rodar() {
+    public static void rodar() {
         try {
+        	serverSocket = new ServerSocket(PORTA);
+        	
+        	clientesConectados = new HashMap<>();
+        	
             System.out.println("Server rodando na porta: " + PORTA);
 
             while(!serverSocket.isClosed()) {

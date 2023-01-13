@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +40,8 @@ public class UsuarioDao {
                 optional.get().setUsername(resultSet.getString("username"));
                 
                 optional.get().setEmail(resultSet.getString("email"));
+                
+                optional.get().getFoto().setImagem(resultSet.getString("foto_perfil"));
             }
 
             resultSet.close();
@@ -67,6 +71,39 @@ public class UsuarioDao {
         	LOGGER.log(Level.SEVERE, sqlException.getMessage());
         	
         	return -1;
+        }
+    }
+    
+    public List<Usuario> buscarTodosAmigos(int id) {
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM usuarios WHERE id <> ? ORDER BY nome";
+
+            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                Usuario usuario = new Usuario();
+
+                usuario.setId(resultSet.getInt("id"));
+                
+                usuario.setNome(resultSet.getString("nome"));
+                
+                usuario.setUsername(resultSet.getString("username"));
+                
+                usuario.getFoto().setImagem(resultSet.getString("foto_perfil"));
+
+                usuarios.add(usuario);
+            }
+
+            return usuarios;
+            
+        } catch(SQLException exception) {
+            return List.of();
         }
     }
 }

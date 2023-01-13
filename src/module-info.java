@@ -4,7 +4,9 @@ module chat_app {
 	requires javafx.base;
 	requires javafx.graphics;
 	requires java.sql;
-	
+	requires fontawesomefx;
+    requires jfoenix;
+    
     exports br.com.chat;
     exports br.com.chat.controller;
     
