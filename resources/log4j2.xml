@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="chat-app" packages="">
+	<Appenders>
+		<File name="db" fileName="db.log" append="true">
+			<PatternLayout>
+				<Pattern> %d{dd/MM/yyyy HH:mm:ss} %-5p %m%n </Pattern>
+			</PatternLayout>
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="db"/>
+		</Root>
+		
+		<Root level="error">
+			<AppenderRef ref="db"/>
+		</Root>
+	</Loggers>
+</Configuration>

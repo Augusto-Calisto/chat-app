@@ -6,6 +6,7 @@ module chat_app {
 	requires java.sql;
 	requires fontawesomefx;
     requires jfoenix;
+	requires log4j.api;
     
     exports br.com.chat;
     exports br.com.chat.controller;

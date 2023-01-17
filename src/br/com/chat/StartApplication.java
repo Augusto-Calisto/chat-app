@@ -23,7 +23,7 @@ public class StartApplication extends Application {
 	public void start(Stage primaryStage) {
 		 Platform.runLater(() -> {
 			 criarTela();
-			 criarTela();
+			 //criarTela();
 	     });
 	}
 	

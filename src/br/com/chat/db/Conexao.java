@@ -1,15 +1,14 @@
 package br.com.chat.db;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Conexao {
-	private static final Logger LOGGER = Logger.getLogger(Conexao.class.getName());
+	private static Logger logger = LogManager.getLogger(Conexao.class);
 	
 	private static final String URL = "jdbc:mysql://localhost:3306/chat_app?serverTimezone=UTC";
 	private static final String USUARIO = "root";
@@ -19,14 +18,14 @@ public class Conexao {
 
     public Connection getConnection() {
         try {
-        	LOGGER.addHandler(new FileHandler("connection_db.log", true));
-        	
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(URL, USUARIO, SENHA);
+                        
+            logger.info("Conexao estabelecida com o Banco de Dados");
 
-        } catch(ClassNotFoundException | SQLException | SecurityException | IOException error) {
-        	LOGGER.log(Level.SEVERE, error.getMessage());
+        } catch(ClassNotFoundException | SQLException connectionError) {
+        	logger.error(connectionError.getMessage());
         }
 
         return connection;
