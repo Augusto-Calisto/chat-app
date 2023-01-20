@@ -40,7 +40,7 @@ public class HistoricoDao {
         List<Conversa> conversas = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM historico_conversas WHERE id_usuario_remetente = ? AND id_usuario_destinatario = ? OR id_usuario_remetente = ? AND id_usuario_destinatario = ?";
+            String sql = "SELECT * FROM historico_conversas WHERE id_usuario_remetente = ? AND id_usuario_destinatario = ? OR id_usuario_remetente = ? AND id_usuario_destinatario = ? ORDER BY data_hora";
 
             PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
 
