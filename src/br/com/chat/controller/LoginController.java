@@ -91,7 +91,7 @@ public class LoginController {
 
          tela.setResizable(false);
          
-         tela.initModality(Modality.WINDOW_MODAL);
+         tela.initModality(Modality.APPLICATION_MODAL);
 
          tela.setScene(scene);
 
