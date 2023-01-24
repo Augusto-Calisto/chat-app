@@ -24,9 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -71,6 +71,9 @@ public class ChatController implements Initializable {
 
     @FXML
     private ListView<Usuario> listChatWindow;
+
+    @FXML
+	private TextField txtPesquisarContato;
 
     public ChatController() {
         usuarioDao = new UsuarioDao();
@@ -165,8 +168,16 @@ public class ChatController implements Initializable {
 
     @SuppressWarnings("exports")
 	@FXML
-    public void pesquisarUsuario(KeyEvent event) {
-    	System.out.println("Contato pesquisado: " + event.getText());
+    public void pesquisarUsuario(ActionEvent event) {    	    	
+    	if(!txtPesquisarContato.getText().isBlank()) {
+    		List<Usuario> amigosFiltrados = usuarioDao.buscarAmigosPeloNome(txtPesquisarContato.getText(), usuarioAutenticado.getId());
+        	
+        	listChatWindow.getItems().setAll(amigosFiltrados);
+    	} else {
+    		List<Usuario> amigos = usuarioDao.buscarTodosAmigos(usuarioAutenticado.getId());
+        	
+        	listChatWindow.getItems().setAll(amigos);
+    	}
     }
 
     @SuppressWarnings("exports")

@@ -112,4 +112,39 @@ public class UsuarioDao {
             return List.of();
         }
     }
+    
+    public List<Usuario> buscarAmigosPeloNome(String busca, int id) {
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM usuarios WHERE id <> ? AND nome LIKE ? ORDER BY nome";
+
+            PreparedStatement preparedStatement = conexao.getConnection().prepareStatement(sql);
+
+            preparedStatement.setInt(1, id);
+            
+            preparedStatement.setString(2, "%" + busca + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                Usuario usuario = new Usuario();
+
+                usuario.setId(resultSet.getInt("id"));
+                
+                usuario.setNome(resultSet.getString("nome"));
+                
+                usuario.setUsername(resultSet.getString("username"));
+                
+                usuario.getFoto().setImagem(resultSet.getString("foto_perfil"));
+
+                usuarios.add(usuario);
+            }
+
+            return usuarios;
+            
+        } catch(SQLException sqlException) {        	
+            return List.of();
+        }
+    }
 }
