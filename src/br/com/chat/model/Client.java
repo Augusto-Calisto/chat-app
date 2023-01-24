@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import br.com.chat.entity.Usuario;
+import br.com.chat.view.Badge;
 
 public class Client {
     private Socket socket;

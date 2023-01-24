@@ -1,7 +1,8 @@
-package br.com.chat.model;
+package br.com.chat.view;
 
 import java.util.List;
 
+import br.com.chat.model.Conversa;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

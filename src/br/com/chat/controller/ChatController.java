@@ -10,11 +10,11 @@ import java.util.ResourceBundle;
 import br.com.chat.dao.HistoricoDao;
 import br.com.chat.dao.UsuarioDao;
 import br.com.chat.entity.Usuario;
-import br.com.chat.model.Badge;
 import br.com.chat.model.Client;
 import br.com.chat.model.Conversa;
+import br.com.chat.view.Badge;
+import br.com.chat.view.UsuarioListCell;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,9 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -41,12 +41,9 @@ public class ChatController implements Initializable {
     private Conversa conversa;
     
     private Usuario usuarioAutenticado;
-
+    
     @FXML
     private TextArea mensagem;
-
-    @FXML
-    private TextField txtPesquisarContato;
 
     @FXML
     private VBox trocaDeMensagens;
@@ -91,7 +88,7 @@ public class ChatController implements Initializable {
     	        	spConversa.setVvalue(newValue.doubleValue());
     	        });
     			
-    			lblNomeDoUsuarioAutenticado.setText(usuarioAutenticado.getUsername());
+    			lblNomeDoUsuarioAutenticado.setText(usuarioAutenticado.getNome());
 		
 	            conversa.setIdUsuarioRemetente(usuarioAutenticado.getId());
 	            
@@ -112,33 +109,39 @@ public class ChatController implements Initializable {
     private void buscarAmigosUsuarioAutenticado() {
     	List<Usuario> listaDeAmigos = usuarioDao.buscarTodosAmigos(usuarioAutenticado.getId());
     	
-        listChatWindow.setItems(FXCollections.observableArrayList(listaDeAmigos));
-
+    	listChatWindow.setCellFactory(param -> new UsuarioListCell());
+    	
+    	listChatWindow.setPrefHeight(350);
+    	
+    	listChatWindow.getItems().setAll(listaDeAmigos);
+    	
         listChatWindow.setOnMouseClicked(event -> {
             Usuario usuarioSelecionado = listChatWindow.getSelectionModel().getSelectedItem();
-
-            conversa.setIdUsuarioDestinatario(usuarioSelecionado.getId());
-
-            banner.setVisible(false);
-
-            List<Conversa> conversas = historicoDao.getHistoricoConversas(usuarioAutenticado.getId(), usuarioSelecionado.getId());
-
-            trocaDeMensagens.getChildren().setAll(new HBox());
             
-            if(!conversas.isEmpty()) {
-                Badge.montarHistoricoConversa(trocaDeMensagens, usuarioAutenticado.getId(), conversas);
+            if(usuarioSelecionado != null) {
+	            conversa.setIdUsuarioDestinatario(usuarioSelecionado.getId());
+	
+	            banner.setVisible(false);
+	
+	            List<Conversa> conversas = historicoDao.getHistoricoConversas(usuarioAutenticado.getId(), usuarioSelecionado.getId());
+	
+	            trocaDeMensagens.getChildren().setAll(new HBox());
+	            
+	            if(!conversas.isEmpty()) {
+	                Badge.montarHistoricoConversa(trocaDeMensagens, usuarioAutenticado.getId(), conversas);
+	            }
+	
+	            painelDaConversa.setVisible(true);
+	
+	            ByteArrayInputStream fotoDoUsuarioSelecionado = usuarioSelecionado.getFoto().getBytes();
+	
+	            fotoDaPessoaSelecionada.setImage(new Image(fotoDoUsuarioSelecionado));
+	
+	            nomeDaPessoaSelecionada.setText(usuarioSelecionado.getNome());
             }
-
-            painelDaConversa.setVisible(true);
-
-            ByteArrayInputStream fotoDoUsuarioSelecionado = usuarioSelecionado.getFoto().getBytes();
-
-            fotoDaPessoaSelecionada.setImage(new Image(fotoDoUsuarioSelecionado));
-
-            nomeDaPessoaSelecionada.setText(usuarioSelecionado.getNome());
         });
 	}
-
+    
     @SuppressWarnings("exports")
 	@FXML
     public void enviarMensagem(ActionEvent event) {
@@ -162,8 +165,8 @@ public class ChatController implements Initializable {
 
     @SuppressWarnings("exports")
 	@FXML
-    public void pesquisarContato(ActionEvent event) {
-        System.out.println("Contato pesquisado: " + txtPesquisarContato.getText());
+    public void pesquisarUsuario(KeyEvent event) {
+    	System.out.println("Contato pesquisado: " + event.getText());
     }
 
     @SuppressWarnings("exports")
